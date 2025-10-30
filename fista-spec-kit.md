@@ -11,12 +11,12 @@ Bringing clarity, structure, and speed to modern AI-driven software projects.
 
 ```mermaid
 graph TD
-  A[/constitution<br/>Project principles & standards/] --> B[/specify<br/>Define what to build (no technical info)/]
-  B --> C[/clarify<br/>Follow-up questions/]
-  C --> D[/plan<br/>Implementation plan/]
-  D --> E[/tasks<br/>Break plan into actionable steps/]
-  E --> F[/analyze<br/>Validate docs/]
-  F --> G[/implement<br/>Execute tasks & test/]
+  A[/constitution: Project principles and standards/] --> B[/specify: Define what to build - no technical info/]
+  B --> C[/clarify: Follow-up questions/]
+  C --> D[/plan: Implementation plan/]
+  D --> E[/tasks: Break plan into actionable steps/]
+  E --> F[/analyze: Validate docs/]
+  F --> G[/implement: Execute tasks and test/]
 ```
 
 In SDLC terms:
