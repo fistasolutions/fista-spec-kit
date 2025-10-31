@@ -246,84 +246,12 @@ Additional commands for enhanced quality and validation:
 | `/speckit.clarify`   | Clarify underspecified areas (recommended before `/speckit.plan`; formerly `/quizme`) |
 | `/speckit.analyze`   | Cross-artifact consistency & coverage analysis (run after `/speckit.tasks`, before `/speckit.implement`) |
 | `/speckit.checklist` | Generate custom quality checklists that validate requirements completeness, clarity, and consistency (like "unit tests for English") |
-| `/speckit.extract`   | Inventory existing codebase (Next.js routes, React components, OpenAPI) and generate SpecKit artifacts for adding new features on top |
 
 ### Environment Variables
 
 | Variable         | Description                                                                                    |
 |------------------|------------------------------------------------------------------------------------------------|
 | `SPECIFY_FEATURE` | Override feature detection for non-Git repositories. Set to the feature directory name (e.g., `001-photo-albums`) to work on a specific feature when not using Git branches.<br/>**Must be set in the context of the agent you're working with prior to using `/speckit.plan` or follow-up commands. |
-
-### Extract from Existing Projects
-
-The `speckit extract` command allows you to scan an existing codebase and generate SpecKit artifacts, enabling you to use `/speckit.specify` and other commands to add new features on top of your existing project.
-
-#### Installation
-
-After initializing a Spec Kit project, install the required dependencies:
-
-```bash
-pnpm install
-```
-
-#### Usage
-
-Scan your codebase and generate inventory artifacts:
-
-```bash
-# Extract from default src directory
-pnpm speckit:extract ./src
-
-# Extract from a specific app directory
-pnpm speckit:extract ./apps/web
-
-# After generating OpenAPI spec
-curl http://localhost:8000/openapi.json > apps/api/openapi.json && pnpm speckit:extract ./apps/api
-```
-
-#### Outputs
-
-The command generates three files in `packages/specs/active/extracted/`:
-
-1. **`spec.yaml`** - Structured inventory containing:
-   - Next.js routes (pages and API routes)
-   - React components
-   - API endpoints from OpenAPI specs
-
-2. **`inventory.md`** - Human-readable tables showing:
-   - Route paths with file locations
-   - Component names and file paths
-   - API endpoints with methods and summaries
-
-3. **`tasks.md`** - Append-only reconciliation checklist (timestamped) for reviewing extracted artifacts
-
-#### What Gets Detected
-
-- **Next.js App Router**: Scans `app/**/{page,route}.{ts,tsx,js,jsx}` and derives web paths
-  - Handles route groups: `(group)/page.tsx`
-  - Handles index pages: `page.tsx` → `/`
-  
-- **React Components**: Detects components in:
-  - `components/**/*.{tsx,jsx}`
-  - `ui/**/*.{tsx,jsx}`
-  - `shared/**/*.{tsx,jsx}`
-
-- **OpenAPI Specs**: Attempts to load from:
-  - `apps/api/openapi.json`
-  - `public/openapi.json`
-  - `<INPUT_PATH>/openapi.json`
-
-#### Next Steps
-
-After extraction:
-
-1. **Review the artifacts** in `packages/specs/active/extracted/`
-2. **Open a PR** with these changes and a reconciliation checklist
-3. **Use `/speckit.specify`** to add new features on top of the existing codebase
-4. **Use `/speckit.tasks`** to create action items for documentation updates
-5. **Use `/speckit.plan`** to plan enhancements or modernizations
-
-The extract command is idempotent—re-running it updates the YAML and appends new checklist sections to `tasks.md` without deleting existing documentation.
 
 ## 📚 Core Philosophy
 
